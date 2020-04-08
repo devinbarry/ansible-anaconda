@@ -1,0 +1,40 @@
+---
+- name: install OS pkg dependencies
+  become: yes
+  become_user: root
+  with_items: '{{ anaconda_dep_pkgs | default([]) }}'
+  loop_control:
+    loop_var: anaconda_os_pkg
+  package:
+    state: present
+    name: '{{ anaconda_os_pkg }}'
+
+- name: check for installation of Anaconda
+  stat:
+    path: '{{ anaconda_install_dir }}/{{ conda_bin_path }}'
+  changed_when: false
+  register: anaconda_conda_binary
+
+- when: not anaconda_conda_binary.stat.exists
+  block:
+    - name: download installer...
+      get_url:
+        url: '{{ anaconda_installer_url }}'
+        dest: "~/{{ anaconda_installer_sh }}"
+        timeout: '{{ anaconda_timeout_seconds }}'
+        checksum: '{{ anaconda_checksum }}'
+        mode: 0755
+
+    - name: install...
+      command: "bash ~/{{ anaconda_installer_sh }} -b -p {{ anaconda_install_dir }}"
+      args:
+        creates: '{{ anaconda_install_dir }}'
+
+    - name: Add path and initialize conda
+      shell: export PATH=~/anaconda3/bin:$PATH && conda init
+      args:
+        executable: /bin/bash
+
+- name: update conda pkgs...
+  when: anaconda_pkg_update
+  command: '{{ anaconda_install_dir }}/{{ conda_bin_path }} update -y --all'

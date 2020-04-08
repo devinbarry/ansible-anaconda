@@ -1,2 +1,33 @@
 ---
-# defaults file for anaconda
+# main Anaconda download server
+anaconda_mirror: https://repo.continuum.io/archive
+
+# version of Python (2|3)
+anaconda_python_ver: 3
+
+# Anaconda version
+anaconda_ver: '2020.02'
+
+# Anaconda checksums...
+# https://repo.continuum.io/archive/
+anaconda_checksums:
+  Anaconda3-2020.02-Linux-x86_64.sh: sha256:2b9f088b2022edb474915d9f69a803d6449d5fdb4c303041f60ac4aefcc208bb
+
+
+# when downloading the Anaconda binary it might take a while
+# don't let you less great network connection cause the role to falter
+anaconda_timeout_seconds: 600
+
+anaconda_install_dir: '~/anaconda3'
+anaconda_conda_bin: 'condabin/conda'
+
+# Update all Anaconda packages after install
+anaconda_pkg_update: True
+
+# install a a list of packages into the root conda env. please consider using conda envs effectively!
+#anaconda_install_packages:
+#  - package1
+#  - package2
+
+# control the install channels
+#anaconda_install_channels: "defaults conda-forge bioconda"
