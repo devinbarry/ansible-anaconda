@@ -23,11 +23,3 @@ anaconda_conda_bin: 'condabin/conda'
 
 # Update all Anaconda packages after install
 anaconda_pkg_update: True
-
-# install a a list of packages into the root conda env. please consider using conda envs effectively!
-#anaconda_install_packages:
-#  - package1
-#  - package2
-
-# control the install channels
-#anaconda_install_channels: "defaults conda-forge bioconda"
