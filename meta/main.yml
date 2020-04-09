@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: anaconda
   author: Devin Barry
   description: installs Anaconda as the specified user in the default location
   company: Unobtainium
